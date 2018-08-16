@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
+  ##
   config.vm.box = "debian/jessie64"
 
   # Disable automatic box update checking. If you disable this, then
@@ -22,7 +23,7 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-##
+  ##
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Create a private network, which allows host-only access to the machine
@@ -39,7 +40,8 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
- 
+
+
   config.vm.network "private_network", type: "dhcp"
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox", nfs: true
 
@@ -69,17 +71,6 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get upgrade -y
-    apt-get install -y curl make vim mc git openssl apache2 mysql-server php7.0
-    apt-get install -y php7.0-zip php7.0-mbstring php7.0-readline php7.0-cli php7.0-common php7.0-gd php7.0-json php7.0-mcrypt php7.0-mysql php7.0-readline
-    a2enmod rewrite 2> /dev/null
-
-    #curl https://www.dotdeb.org/dotdeb.gpg | sudo apt-key add -
-    #echo 'deb http://packages.dotdeb.org jessie all' >> /etc/apt/sources.list
-    #echo 'deb-src http://packages.dotdeb.org jessie all' >> /etc/apt/sources.list
-
-    apt-get update
     sh /vagrant/vagrant_bootstrap.sh
   SHELL
 end
